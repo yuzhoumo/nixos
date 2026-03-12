@@ -8,8 +8,8 @@
     git
     glibc
     htop
+    pciutils
     killall
-    lspci
     neovim
     tmux
     tree
