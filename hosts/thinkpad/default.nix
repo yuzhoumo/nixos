@@ -13,6 +13,8 @@
   boot.kernelModules = [ "thinkpad_acpi" ];
   services.thermald.enable = true;
 
+  environment.systemPackages = [ pkgs.brightnessctl ];
+
   # Trackpad
   services.libinput = {
     enable = true;
