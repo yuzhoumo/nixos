@@ -9,6 +9,7 @@
     glibc
     htop
     killall
+    lspci
     neovim
     tmux
     tree
