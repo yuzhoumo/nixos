@@ -23,6 +23,9 @@
     };
   };
 
+  # Fingerprint reader
+  services.fprintd.enable = true;
+
   # Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
