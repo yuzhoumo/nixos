@@ -7,9 +7,12 @@
   };
 
   environment.systemPackages = with pkgs; [
+    bitwarden-desktop
+    firefox
     kitty
-    wofi
-    waybar
     mako
+    spotify
+    waybar
+    wofi
   ];
 }
