@@ -8,6 +8,7 @@
   ];
 
   networking.hostName = "thinkpad";
+  time.timeZone = "America/Los_Angeles";
 
   # ThinkPad P14s Gen 5 Intel
   boot.kernelModules = [ "thinkpad_acpi" ];
