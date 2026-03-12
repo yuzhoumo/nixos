@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../common/desktop
   ];
 
   networking.hostName = "thinkpad";
