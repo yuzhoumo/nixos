@@ -36,6 +36,7 @@
     packages = with pkgs; [
       docker
       docker-compose
+      github-copilot-cli
       go
       python315
       uv
