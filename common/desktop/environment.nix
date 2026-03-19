@@ -1,11 +1,6 @@
 { pkgs, ... }:
 
 {
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   environment = {
     systemPackages = with pkgs; [
       # core system utilities
@@ -19,7 +14,7 @@
       rofi          # app launcher
       slurp         # screen coord selection util
       waybar        # taskbar
-      wdisplays     # display manager
+      wdisplays     # display configuration
       wl-clipboard  # clipboard
 
       networkmanagerapplet # todo: find a better one
@@ -30,12 +25,26 @@
       spotify
     ];
 
-    # hyprland configurations
-    etc."hypr/hyprland.conf".source = ./hyprland/hyprland.conf;
-
-    # waybar configurations
+    # write config files to /etc
+    etc."xdg/hypr/hyprland.conf".source = ./hyprland/hyprland.conf;
     etc."xdg/waybar/config.jsonc".source = ./waybar/config.jsonc;
     etc."xdg/waybar/style.css".source = ./waybar/style.css;
+  };
+
+  programs.dconf.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+
+    # enable xwayland for backwards compatability
+    xwayland.enable = true;
+
+    # override configuration location
+    package = pkgs.hyprland.overrideAttrs {
+      postFixup = ''
+        wrapProgram $out/bin/Hyprland --add-flags "--config /etc/xdg/hypr/hyprland.conf"
+      '';
+    };
   };
 
   services = {
