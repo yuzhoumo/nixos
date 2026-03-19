@@ -61,6 +61,16 @@ tooltip {
   padding: 2px;
 }
 
+#calendar {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+}
+
+tooltip label {
+  font-family: 'Hack Nerd Font';
+  font-size: 12px;
+}
+
 #battery.warning {
   color: #f9e2af;
 }

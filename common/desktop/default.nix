@@ -4,7 +4,7 @@
   imports = [
     ./audio.nix
     ./fonts
-    ./hyprland.nix
+    ./environment.nix
     ./wayland.nix
   ];
 }
