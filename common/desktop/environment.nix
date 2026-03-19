@@ -14,6 +14,7 @@
       nautilus      # file browser
       rofi          # app launcher
       slurp         # screen coord selection util
+      swayosd       # macos-style osd for volume/brightness
       waybar        # wayland taskbar
       wdisplays     # wayland display configuration
       wl-clipboard  # wayland clipboard
