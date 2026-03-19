@@ -2,9 +2,8 @@
 
 {
   imports = [
-    ./audio.nix
-    ./fonts
+    ./fonts.nix
     ./environment.nix
-    ./wayland.nix
+    ./audio.nix
   ];
 }

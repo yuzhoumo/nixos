@@ -30,14 +30,12 @@
       spotify
     ];
 
+    # hyprland configurations
+    etc."hypr/hyprland.conf".source = ./hyprland/hyprland.conf;
+
+    # waybar configurations
     etc."xdg/waybar/config.jsonc".source = ./waybar/config.jsonc;
     etc."xdg/waybar/style.css".source = ./waybar/style.css;
-
-    variables = {
-      # configure cursor theme
-      XCURSOR_THEME = "macOS";
-      XCURSOR_SIZE = "24";
-    };
   };
 
   services = {
