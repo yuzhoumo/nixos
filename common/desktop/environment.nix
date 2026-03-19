@@ -9,13 +9,14 @@
       grim          # screenshot util
       hyprpaper     # wallpaper manager
       kitty         # terminal emulator
-      mako          # notifications
+      libnotify     # notification backend
+      mako          # notification frontend
       nautilus      # file browser
       rofi          # app launcher
       slurp         # screen coord selection util
-      waybar        # taskbar
-      wdisplays     # display configuration
-      wl-clipboard  # clipboard
+      waybar        # wayland taskbar
+      wdisplays     # wayland display configuration
+      wl-clipboard  # wayland clipboard
 
       networkmanagerapplet # todo: find a better one
 
@@ -27,10 +28,12 @@
 
     # write config files to /etc
     etc."xdg/hypr/hyprland.conf".source = ./hyprland/hyprland.conf;
+    etc."xdg/hypr/hyprpaper.conf".source = ./hyprland/hyprpaper.conf;
     etc."xdg/waybar/config.jsonc".source = ./waybar/config.jsonc;
     etc."xdg/waybar/style.css".source = ./waybar/style.css;
   };
 
+  # gnome config store
   programs.dconf.enable = true;
 
   programs.hyprland = {
