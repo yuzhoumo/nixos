@@ -1,16 +1,16 @@
-# Catppuccin Mocha
-font=Hack Nerd Font 11
-background-color=#1e1e2edd
-text-color=#cdd6f4
-border-color=#89b4fa
-border-size=2
-border-radius=8
-padding=12
-margin=8
-default-timeout=5000
-max-visible=3
-layer=overlay
+# catpuccin mocha theme
 anchor=top-right
+background-color=#1e1e2edd
+border-color=#89b4fa
+border-radius=8
+border-size=2
+default-timeout=5000
+font=Hack Nerd Font 11
+layer=overlay
+margin=8
+max-visible=3
+padding=12
+text-color=#cdd6f4
 width=350
 
 [urgency=low]

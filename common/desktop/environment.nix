@@ -5,7 +5,6 @@
     systemPackages = with pkgs; [
       # core system utilities
       apple-cursor   # cursor theme
-      catppuccin-gtk # catpuccin theme
       brightnessctl  # screen brightness
       grim           # screenshot util
       hyprpaper      # wallpaper manager
