@@ -10,44 +10,20 @@
   users.users.ppanda = {
     extraGroups = [ "video" "audio" ];
     packages = with pkgs; [
+      claude-code
+      discord
       docker
       docker-compose
-      claude-code
       github-copilot-cli
-      opencode
       go
       mangohud
+      opencode
       protonup-qt
       python315
       uv
     ];
   };
 
-  networking.hostName = "thinkpad";
-  time.timeZone = "America/Los_Angeles";
-
-  # ThinkPad P14s Gen 5 Intel
-  boot.kernelModules = [ "thinkpad_acpi" ];
-  services.thermald.enable = true;
-
-  # Trackpad
-  services.libinput = {
-    enable = true;
-    touchpad = {
-      tapping = true;
-    };
-  };
-
-  # Fingerprint reader
-  services.fprintd.enable = true;
-
-  # Graphics (Intel Iris Xe)
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
-  # Steam
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -55,9 +31,28 @@
   };
   programs.gamemode.enable = true;
 
-  # Bluetooth
+  networking.hostName = "thinkpad";
+  time.timeZone = "America/Los_Angeles";
+
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      tapping = true;
+    };
+  };
+
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  services.fprintd.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # ThinkPad P14s Gen 5 Intel
+  boot.kernelModules = [ "thinkpad_acpi" ];
+  services.thermald.enable = true;
 
   system.stateVersion = "25.11";
 }
