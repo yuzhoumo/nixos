@@ -3,6 +3,7 @@
 {
   environment = {
     systemPackages = with pkgs; [
+      adw-gtk3             # adwaita dark gtk3 theme
       apple-cursor         # cursor theme
       bitwarden-desktop    # password manager
       bluetuith            # bluetooth management tui
@@ -16,6 +17,7 @@
       nautilus             # file browser
       networkmanagerapplet # todo: find a better one
       nwg-displays         # display manager
+      nwg-look             # gtk theme manager
       pamixer              # volume mixer cli
       pavucontrol          # volume mixer gui
       playerctl            # media control
