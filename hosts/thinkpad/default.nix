@@ -17,6 +17,7 @@
       github-copilot-cli
       go
       mangohud
+      nodejs_24
       opencode
       protonup-qt
       python315
