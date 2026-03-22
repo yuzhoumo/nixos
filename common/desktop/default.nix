@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   imports = [
     ./fonts.nix
     ./environment.nix
-    ./audio.nix
+    ./gaming.nix
   ];
 }

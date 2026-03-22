@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../common
+    ../../common/all
     ../../common/desktop
   ];
 
@@ -20,16 +20,10 @@
       opencode
       protonup-qt
       python315
+      spotify
       uv
     ];
   };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-  programs.gamemode.enable = true;
 
   networking.hostName = "thinkpad";
   time.timeZone = "America/Los_Angeles";
@@ -42,7 +36,6 @@
   };
 
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
   services.fprintd.enable = true;
 
   hardware.graphics = {
