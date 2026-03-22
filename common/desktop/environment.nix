@@ -15,7 +15,7 @@
       libnotify            # notification backend
       mako                 # notification frontend
       nautilus             # file browser
-      networkmanagerapplet # todo: find a better one
+      networkmanagerapplet # network manager
       nwg-displays         # display manager
       nwg-look             # gtk theme manager
       pamixer              # volume mixer cli
