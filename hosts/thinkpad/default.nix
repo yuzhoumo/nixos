@@ -16,15 +16,23 @@
       docker-compose
       github-copilot-cli
       go
-      mangohud
       nodejs_24
       opencode
-      protonup-qt
       python315
       spotify
       uv
     ];
   };
+
+  # Allow ppanda to run commands as the steam user without a password
+  security.sudo.extraRules = [{
+    users = [ "ppanda" ];
+    runAs = "steam";
+    commands = [{
+      command = "ALL";
+      options = [ "NOPASSWD" "SETENV" ];
+    }];
+  }];
 
   networking.hostName = "thinkpad";
   time.timeZone = "America/Los_Angeles";
