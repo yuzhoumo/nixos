@@ -1,7 +1,6 @@
 { ... }:
 
 {
-  # --- SSH hardening ---
   services.openssh = {
     enable = true;
     settings = {
@@ -15,14 +14,12 @@
     openFirewall = true;
   };
 
-  # --- Firewall ---
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ ];
     allowedUDPPorts = [ ];
   };
 
-  # --- fail2ban ---
   services.fail2ban = {
     enable = true;
     maxretry = 3;
@@ -30,7 +27,6 @@
     bantime-increment.enable = true;
   };
 
-  # --- Kernel hardening ---
   boot.kernel.sysctl = {
     # Prevent SYN flood attacks
     "net.ipv4.tcp_syncookies" = 1;
@@ -52,15 +48,12 @@
     "kernel.dmesg_restrict" = 1;
   };
 
-  # --- Disable unnecessary services ---
   services.xserver.enable = false;
 
-  # --- Automatic security updates ---
   system.autoUpgrade = {
     enable = true;
     allowReboot = false;
   };
 
-  # --- Misc hardening ---
   security.sudo.execWheelOnly = true;
 }
