@@ -6,6 +6,7 @@
     keep-outputs = true;
     keep-derivations = true;
     auto-optimise-store = true;
+    use-xdg-base-directories = true;
   };
 
   nix.gc = {
