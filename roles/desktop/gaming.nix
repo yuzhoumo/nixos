@@ -2,7 +2,7 @@
 
 let
   setfacl = "${pkgs.acl}/bin/setfacl";
-  xhost = "${pkgs.xorg.xhost}/bin/xhost";
+  xhost = "${pkgs.xhost}/bin/xhost";
 
   # Wrapper that forwards display/audio sockets and runs steam as the steam user.
   # Installed as a bin package so it's available in PATH at a stable location.
