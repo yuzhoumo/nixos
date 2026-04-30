@@ -12,12 +12,12 @@
 
   hardware.cpu.intel.updateMicrocode = true; # meltdown/spectre tweaks
 
-  powerManagement {
+  powerManagement = {
     cpuFreqGovernor = "schedutil"; # cpu frequency scaling
     powertop.enable = true; # auto-tune USB/PCIe/SATA power management
-  }
+  };
 
-  services {
+  services = {
     fstrim.enable = true; # enable ssd trim
     thermald.enable = true; # intel thermal management daemon
   };
