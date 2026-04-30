@@ -5,7 +5,9 @@
     ./hardware-configuration.nix
     ../../roles/all
     ../../roles/server
+    ../../services/docker
     ../../services/ssh
+    ../../services/tailscale
   ];
 
   networking.hostName = "optiplex";
