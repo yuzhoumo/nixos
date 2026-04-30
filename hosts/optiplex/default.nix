@@ -10,6 +10,8 @@
     ../../services/tailscale
   ];
 
+  hardware.cpu.intel.updateMicrocode = true;
+
   networking.hostName = "optiplex";
   time.timeZone = "America/Los_Angeles";
 
