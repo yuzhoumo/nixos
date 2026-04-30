@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../../roles/all
     ../../roles/desktop
+    ../../services/docker
     ../../services/tailscale
   ];
 
@@ -13,8 +14,6 @@
     packages = with pkgs; [
       claude-code
       discord
-      docker
-      docker-compose
       github-copilot-cli
       go
       nodejs_24
