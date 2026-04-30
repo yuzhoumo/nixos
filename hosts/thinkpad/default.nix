@@ -3,8 +3,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../common/all
-    ../../common/desktop
+    ../../roles/all
+    ../../roles/desktop
+    ../../services/tailscale
   ];
 
   users.users.ppanda = {

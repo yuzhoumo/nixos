@@ -15,7 +15,9 @@ sudo nixos-rebuild test --flake .#thinkpad
 nix build .#nixosConfigurations.thinkpad.config.system.build.toplevel
 ```
 
-| host     | type    | common roles | purpose                  |
+## Hosts
+
+| host     | type    | roles        | purpose                  |
 |----------|---------|--------------|--------------------------|
 | thinkpad | laptop  | all,desktop  | personal laptop          |
 | optiplex | server  | all,server   | lightweight homelab node |

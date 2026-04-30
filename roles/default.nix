@@ -4,5 +4,6 @@
   imports = [
     ./all
     ./desktop
+    ./server
   ];
 }

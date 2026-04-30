@@ -5,10 +5,10 @@
     ./hardware-configuration.nix
     ../../roles/all
     ../../roles/server
-    ../../services/ssh
+    ../../services/tailscale
   ];
 
-  networking.hostName = "optiplex";
+  networking.hostName = "ingress";
   time.timeZone = "America/Los_Angeles";
 
   system.stateVersion = "25.11";
