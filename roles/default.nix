@@ -1,9 +1,0 @@
-{ ... }:
-
-{
-  imports = [
-    ./all
-    ./desktop
-    ./server
-  ];
-}

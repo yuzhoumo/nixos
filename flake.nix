@@ -17,16 +17,12 @@
         modules = [
           "${nixos-hardware}/lenovo/thinkpad/p14s/intel"
           nix-index-database.nixosModules.nix-index
-          ./roles
-          ./services
           ./hosts/thinkpad
         ];
       };
       optiplex = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./roles
-          ./services
           ./hosts/optiplex
         ];
       };
