@@ -12,7 +12,6 @@
   users.users.ppanda = {
     extraGroups = [ "video" "audio" ];
     packages = with pkgs; [
-      claude-code
       discord
       github-copilot-cli
       go
@@ -20,6 +19,7 @@
       opencode
       python315
       spotify
+      tor-browser
       uv
     ];
   };
