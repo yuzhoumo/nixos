@@ -9,4 +9,9 @@
       runtimes.runsc.path = "${pkgs.gvisor}/bin/runsc";
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /opt/docker 0755 root root -" # docker compose files
+    "d /data 0755 root root -"       # bind mount for persistent data
+  ];
 }
