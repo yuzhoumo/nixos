@@ -54,24 +54,3 @@ age keys derived from each host's ed25519 SSH key.
    ```sh
    sops updatekeys secrets/secrets.yaml
    ```
-
-4. Set up the sops CLI on the new host so you can edit secrets locally:
-
-   ```sh
-   mkdir -p ~/.config/sops/age
-   sudo nix run nixpkgs#ssh-to-age -- -private-key \
-     -i /etc/ssh/ssh_host_ed25519_key > ~/.config/sops/age/keys.txt
-   chmod 600 ~/.config/sops/age/keys.txt
-   ```
-
-5. Configure sops in the host's `default.nix`:
-
-   ```nix
-   sops = {
-     defaultSopsFile = ../../secrets/secrets.yaml;
-     secrets.my-secret = {};
-   };
-   ```
-
-   sops-nix defaults to reading `/etc/ssh/ssh_host_ed25519_key`, so no
-   `age.keyFile` or `age.sshKeyPaths` is needed.

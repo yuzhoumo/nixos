@@ -14,6 +14,7 @@
     killall
     neovim
     sops
+    ssh-to-age
     tmux
     tree
     unzip
