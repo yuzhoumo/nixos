@@ -22,9 +22,8 @@
     thermald.enable = true; # intel thermal management daemon
   };
 
-  sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
-    secrets.tailscale-oauth-optiplex = {
+  sops.secrets = {
+    tailscale-oauth-optiplex = {
       owner = "root";
       restartUnits = [ "tailscaled-autoconnect.service" ];
     };
