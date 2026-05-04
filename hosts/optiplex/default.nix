@@ -27,12 +27,13 @@
     defaultSopsFile = ../../secrets/secrets.yaml;
     secrets.tailscale-oauth-optiplex = {
       owner = "root";
+      restartUnits = [ "tailscaled-autoconnect.service" ];
     };
   };
 
   services.tailscale = {
-    enable = true;
     authKeyFile = config.sops.secrets.tailscale-oauth-optiplex.path;
+    authKeyParameters.preauthorized = true;
   };
 
   networking.hostName = "optiplex";
