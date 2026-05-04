@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -26,7 +26,6 @@
     age.keyFile = "/home/ppanda/.config/sops/age/keys.txt";
     defaultSopsFile = ../../secrets/secrets.yaml;
     secrets.tailscale-oauth-optiplex = {
-      sopsFile = ./secrets/secrets.yaml;
       owner = "root";
     };
   };
