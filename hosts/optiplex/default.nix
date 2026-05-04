@@ -34,6 +34,11 @@
   services.tailscale = {
     authKeyFile = config.sops.secrets.tailscale-oauth-optiplex.path;
     authKeyParameters.preauthorized = true;
+    extraUpFlags = [
+      "--advertise-tags=tag:self-auth"
+      "--advertise-exit-node"
+      "--ssh"
+    ];
   };
 
   networking.hostName = "optiplex";

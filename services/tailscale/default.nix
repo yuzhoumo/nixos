@@ -5,10 +5,6 @@
     enable = true;
     useRoutingFeatures = "both"; # both client and server subnet router
     extraDaemonFlags = ["--no-logs-no-support"]; # disable telemetry
-    extraUpFlags = [
-      "--advertise-exit-node"
-      "--ssh"
-    ];
   };
 
   networking.firewall = {
