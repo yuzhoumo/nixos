@@ -25,7 +25,7 @@
   systemd.network.wait-online.enable = false;
   boot.initrd.systemd.network.wait-online.enable = false;
 
-  # optimize UDP throughpu (requires pkgs.ethtool)
+  # optimize UDP throughput (requires pkgs.ethtool)
   services.networkd-dispatcher = {
     enable = true;
     rules."50-tailscale-optimizations" = {

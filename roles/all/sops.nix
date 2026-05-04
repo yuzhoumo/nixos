@@ -6,7 +6,7 @@
   environment.variables.SOPS_AGE_KEY_FILE = "/etc/sops/age/keys.txt";
 
   # sops-nix will default to the host ssh keys for decrypting secrets, but we
-  # still need to dervice the age keyfile for the CLI separately
+  # still need to derive the age keyfile for the CLI separately
   system.activationScripts.generate-sops-age-key = {
     deps = [ "etc" ];
     text = ''
