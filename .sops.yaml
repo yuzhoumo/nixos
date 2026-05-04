@@ -1,6 +1,6 @@
 keys:
-  - &optiplex age1x6kpxmwt8whspyr85yaapws820uf0dpy45fz87k2jpa2y58yu54su4xzqu
-  - &thinkpad age1gn4zwdx42m6g0xw5rhpy69dahywmcduv0uta3p58mz8wwapnyfsqfk4pck
+  - &optiplex age1cep9tzdt920mp9j5ajruuna2hmmtvwzvmda6l8gqhny49res9syqc9nmru
+  - &thinkpad age1jm7l0a2pd3df3xupynajs87lkg96zaxn05jgv4fl04z5pxkm9pksdhz35y
 
 creation_rules:
   - path_regex: secrets/secrets.yaml$

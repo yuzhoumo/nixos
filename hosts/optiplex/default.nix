@@ -23,7 +23,6 @@
   };
 
   sops = {
-    age.keyFile = "/home/ppanda/.config/sops/age/keys.txt";
     defaultSopsFile = ../../secrets/secrets.yaml;
     secrets.tailscale-oauth-optiplex = {
       owner = "root";
