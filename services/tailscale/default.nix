@@ -24,15 +24,4 @@
   # optimization: prevent systemd from waiting for network online
   systemd.network.wait-online.enable = false;
   boot.initrd.systemd.network.wait-online.enable = false;
-
-  # optimize UDP throughput (requires pkgs.ethtool)
-  services.networkd-dispatcher = {
-    enable = true;
-    rules."50-tailscale-optimizations" = {
-      onState = [ "routable" ];
-      script = ''
-        ${pkgs.ethtool}/bin/ethtool -K eth0 rx-udp-gro-forwarding on rx-gro-list off
-      '';
-    };
-  };
 }
