@@ -5,6 +5,7 @@
     age
     clang
     curl
+    ethtool
     gcc
     git
     glibc
@@ -12,6 +13,7 @@
     pciutils
     killall
     neovim
+    sops
     tmux
     tree
     unzip

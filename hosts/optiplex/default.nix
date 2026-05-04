@@ -22,6 +22,20 @@
     thermald.enable = true; # intel thermal management daemon
   };
 
+  sops = {
+    age.keyFile = "/home/ppanda/.config/sops/age/keys.txt";
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    secrets.tailscale-oauth-optiplex = {
+      sopsFile = ./secrets/secrets.yaml;
+      owner = "root";
+    };
+  };
+
+  services.tailscale = {
+    enable = true;
+    authKeyFile = config.sops.secrets.tailscale-oauth-optiplex.path;
+  };
+
   networking.hostName = "optiplex";
   time.timeZone = "America/Los_Angeles";
 

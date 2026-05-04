@@ -1,0 +1,10 @@
+keys:
+  - &optiplex age1x6kpxmwt8whspyr85yaapws820uf0dpy45fz87k2jpa2y58yu54su4xzqu
+  - &thinkpad age1gn4zwdx42m6g0xw5rhpy69dahywmcduv0uta3p58mz8wwapnyfsqfk4pck
+
+creation_rules:
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+      - age:
+        - *optiplex
+        - *thinkpad
