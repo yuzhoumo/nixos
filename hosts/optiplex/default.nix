@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -20,6 +20,24 @@
   services = {
     fstrim.enable = true; # enable ssd trim
     thermald.enable = true; # intel thermal management daemon
+  };
+
+  sops.secrets = {
+    tailscale-oauth-optiplex = {
+      owner = "root";
+      restartUnits = [ "tailscaled-autoconnect.service" ];
+    };
+  };
+
+  services.tailscale = {
+    authKeyFile = config.sops.secrets.tailscale-oauth-optiplex.path;
+    authKeyParameters.ephemeral = false;
+    authKeyParameters.preauthorized = true;
+    extraUpFlags = [
+      "--advertise-tags=tag:self-auth"
+      "--advertise-exit-node"
+      "--ssh"
+    ];
   };
 
   networking.hostName = "optiplex";
