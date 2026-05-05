@@ -20,8 +20,4 @@
   systemd.services.tailscaled.serviceConfig.Environment = [
     "TS_DEBUG_FIREWALL_MODE=nftables"
   ];
-
-  # optimization: prevent systemd from waiting for network online
-  systemd.network.wait-online.enable = false;
-  boot.initrd.systemd.network.wait-online.enable = false;
 }
