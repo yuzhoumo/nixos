@@ -13,13 +13,12 @@
       KEY_FILE="/etc/sops/age/keys.txt"
       SSH_KEY="/etc/ssh/ssh_host_ed25519_key"
 
-      [ -f "$SSH_KEY" ] || exit 0
-      [ -f "$KEY_FILE" ] && exit 0
-
-      mkdir -p "$(dirname "$KEY_FILE")"
-      ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i "$SSH_KEY" > "$KEY_FILE"
-      chown root:wheel "$KEY_FILE"
-      chmod 640 "$KEY_FILE"
+      if [ -f "$SSH_KEY" ] && [ ! -f "$KEY_FILE" ]; then
+        mkdir -p "$(dirname "$KEY_FILE")"
+        ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i "$SSH_KEY" > "$KEY_FILE"
+        chown root:wheel "$KEY_FILE"
+        chmod 640 "$KEY_FILE"
+      fi
     '';
   };
 }
