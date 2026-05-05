@@ -13,13 +13,6 @@
 
   # use systemd-networkd for server networking
   networking.useNetworkd = true;
-  systemd.network = {
-    enable = true;
-    networks."10-lan" = {
-      matchConfig.Type = "ether";
-      networkConfig.DHCP = "yes";
-    };
-  };
 
   # optimize UDP throughput (requires pkgs.ethtool)
   services.networkd-dispatcher = {
