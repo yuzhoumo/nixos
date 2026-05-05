@@ -1,4 +1,4 @@
-{ ... }
+{ ... }:
 
 {
   boot.kernel.sysctl = {
@@ -31,4 +31,6 @@
     enable = true;
     allowReboot = false;
   };
+
+  security.sudo.execWheelOnly = true;
 }
