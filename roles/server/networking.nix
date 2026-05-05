@@ -27,7 +27,7 @@
     rules."50-udp-optimizations" = {
       onState = [ "routable" ];
       script = ''
-        ${pkgs.ethtool}/bin/ethtool -K $IFACE rx-udp-gro-forwarding on rx-gro-list off
+        ${pkgs.ethtool}/bin/ethtool -K "$IFACE" rx-udp-gro-forwarding on rx-gro-list off
       '';
     };
   };
