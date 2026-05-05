@@ -34,7 +34,7 @@
     authKeyParameters.ephemeral = false;
     authKeyParameters.preauthorized = true;
     extraUpFlags = [
-      "--advertise-tags=tag:self-auth"
+      "--advertise-tags=tag:self-auth,tag:minecraft"
       "--advertise-exit-node"
       "--ssh"
     ];
