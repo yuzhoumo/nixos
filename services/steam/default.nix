@@ -83,6 +83,16 @@ in
     ];
   };
 
+  # Allow ppanda to run commands as the steam user without a password
+  security.sudo.extraRules = [{
+    users = [ "ppanda" ];
+    runAs = "steam";
+    commands = [{
+      command = "ALL";
+      options = [ "NOPASSWD" "SETENV" ];
+    }];
+  }];
+
   # Enable lingering so systemd creates /run/user/<steam-uid> at boot
   systemd.tmpfiles.rules = [
     "f /var/lib/systemd/linger/steam"
