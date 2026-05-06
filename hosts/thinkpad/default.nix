@@ -7,6 +7,7 @@
     ../../roles/desktop
     ../../services/docker
     ../../services/tailscale
+    ../../services/steam
   ];
 
   users.users.ppanda = {
