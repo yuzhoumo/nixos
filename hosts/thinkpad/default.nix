@@ -35,6 +35,14 @@
     }];
   }];
 
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "lock";
+    HandleLidSwitchDocked = "ignore";
+  };
+
+  powerManagement.enable = true; # nixos stock power management
+
   networking.hostName = "thinkpad";
   time.timeZone = "America/Los_Angeles";
 
