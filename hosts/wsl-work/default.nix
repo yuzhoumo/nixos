@@ -2,8 +2,16 @@
 
 {
   imports = [
-    ../../roles/all
-    ../../roles/developer
+    ../../modules/common
+    ../../modules/developer
+    ../../users/joemo.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    azure-cli
+    git-credential-manager
+    kubectl
+    powershell
   ];
 
   wsl.defaultUser = "joemo";

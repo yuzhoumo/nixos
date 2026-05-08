@@ -2,9 +2,8 @@
 
 {
   imports = [
-    ../../roles/all
-    ../../roles/developer
-
+    ../../modules/all
+    ../../modules/developer
     ../../users/ppanda.nix
   ];
 

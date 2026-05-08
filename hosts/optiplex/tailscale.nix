@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../services/tailscale
+    ../../modules/tailscale
   ];
 
   sops.secrets = {

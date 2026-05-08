@@ -3,13 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-
-    ../../roles/all
-    ../../roles/desktop
-    ../../roles/developer
-
-    ../../services/tailscale
-
+    ../../modules/all
+    ../../modules/desktop
+    ../../modules/developer
+    ../../modules/tailscale
     ../../users/ppanda.nix
   ];
 

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../services/steam
+    ../../modules/steam
   ];
 
   users.users.ppanda = {

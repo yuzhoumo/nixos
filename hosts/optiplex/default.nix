@@ -3,14 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-
-    ../../roles/all
-    ../../roles/server
-
-    ../../services/dockerhost
-    ../../services/ssh
-    ../../services/tailscale
-
+    ../../modules/common
+    ../../modules/server
+    ../../modules/dockerhost
+    ../../modules/ssh
+    ../../modules/tailscale
     ../../users/ppanda.nix
   ];
 
