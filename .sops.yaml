@@ -1,10 +1,13 @@
-keys:
+host_keys:
   - &optiplex age1cep9tzdt920mp9j5ajruuna2hmmtvwzvmda6l8gqhny49res9syqc9nmru
   - &thinkpad age1jm7l0a2pd3df3xupynajs87lkg96zaxn05jgv4fl04z5pxkm9pksdhz35y
 
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: secrets/.*.yaml$
+    key_groups:
+      - age:
+        - *thinkpad
+  - path_regex: secrets/optiplex.yaml$
     key_groups:
       - age:
         - *optiplex
-        - *thinkpad
