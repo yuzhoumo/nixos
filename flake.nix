@@ -18,7 +18,6 @@
   outputs = { self, nixpkgs, nixos-hardware, nix-index-database, sops-nix, nixos-wsl, ... }: {
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
           "${nixos-hardware}/lenovo/thinkpad/p14s/intel"
           nix-index-database.nixosModules.nix-index
@@ -27,7 +26,6 @@
         ];
       };
       optiplex = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
           nix-index-database.nixosModules.nix-index
           sops-nix.nixosModules.sops
