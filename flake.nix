@@ -13,9 +13,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    himmelblau = {
+      url = "github:himmelblau-idm/himmelblau/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nix-index-database, sops-nix, nixos-wsl, ... }: {
+  outputs = { self, nixpkgs, nixos-hardware, nix-index-database, sops-nix, nixos-wsl, himmelblau, ... }: {
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {
         modules = [
@@ -46,6 +50,7 @@
       };
       wsl-work = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit himmelblau; };
         modules = [
           nixos-wsl.nixosModules.default
           {
