@@ -2,7 +2,6 @@
 
 {
   imports = [
-    <nixos-wsl/modules>
     ../../roles/all
     ../../roles/desktop
     ../../services/docker
@@ -21,7 +20,6 @@
     ];
   };
 
-  wsl.enable = true;
   wsl.defaultUser = "ppanda";
 
   networking.hostName = "wsl-personal";
