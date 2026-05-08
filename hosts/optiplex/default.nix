@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
     ../../roles/all
     ../../roles/server
-    ../../services/docker
+    ../../services/dockerhost
     ../../services/ssh
     ../../services/tailscale
   ];

@@ -3,9 +3,7 @@
 {
   imports = [
     ../../roles/all
-    ../../roles/desktop
     ../../roles/developer
-    ../../services/docker
   ];
 
   # disable systemd-boot (conflicts with WSL bootloader)

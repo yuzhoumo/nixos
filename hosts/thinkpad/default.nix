@@ -6,7 +6,6 @@
     ../../roles/all
     ../../roles/desktop
     ../../roles/developer
-    ../../services/docker
     ../../services/tailscale
     ../../services/steam
   ];
