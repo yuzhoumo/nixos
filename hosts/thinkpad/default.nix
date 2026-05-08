@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/all
+    ../../modules/common
     ../../modules/desktop
     ../../modules/developer
     ../../modules/tailscale
