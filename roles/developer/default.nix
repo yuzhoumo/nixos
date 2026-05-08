@@ -13,4 +13,8 @@
       uv
     ];
   };
+
+  # generate apropos, whatis, man -k cache
+  documentation.man.cache.enable = true;
+  documentation.man.generateCaches = true;
 }
