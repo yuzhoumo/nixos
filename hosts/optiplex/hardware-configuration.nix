@@ -10,6 +10,9 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXROOT";
       fsType = "ext4";
@@ -25,4 +28,13 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "schedutil"; # cpu frequency scaling
+    powertop.enable = true; # auto-tune USB/PCIe/SATA power management
+  };
+
+  service.thermald.enable = true; # intel thermal management daemon
+  services.fstrim.enable = true; # enable ssd trim
 }

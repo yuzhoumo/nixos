@@ -7,8 +7,11 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "thinkpad_acpi" ]; # thinkpad p14s gen 5 intel
   boot.extraModulePackages = [ ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXROOT";
@@ -25,4 +28,33 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "schedutil"; # cpu frequency scaling
+    powertop.enable = true; # auto-tune USB/PCIe/SATA power management
+  };
+
+  services.thermald.enable = true; # intel thermal management daemon
+  services.fstrim.enable = true; # enable ssd trim
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "lock";
+    HandleLidSwitchDocked = "ignore";
+  };
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  services.fprintd.enable = true;
+
+  services.libinput = {
+    enable = true;
+    touchpad.tapping = true;
+  };
 }
