@@ -46,6 +46,18 @@
           ./hosts/wsl-personal
         ];
       };
+      wsl-work = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          nixos-wsl.nixosModules.default
+          {
+            wsl.enable = true;
+          }
+          nix-index-database.nixosModules.nix-index
+          sops-nix.nixosModules.sops
+          ./hosts/wsl-work
+        ];
+      };
     };
   };
 }
