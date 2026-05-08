@@ -20,6 +20,10 @@
     ];
   };
 
+  # disable systemd-boot (conflicts with WSL bootloader)
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+
   wsl.defaultUser = "ppanda";
 
   networking.hostName = "wsl-personal";
