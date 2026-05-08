@@ -28,8 +28,17 @@
       optiplex = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          nix-index-database.nixosModules.nix-index
           sops-nix.nixosModules.sops
           ./hosts/optiplex
+        ];
+      };
+      wsl-personal = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          nix-index-database.nixosModules.nix-index
+          sops-nix.nixosModules.sops
+          ./hosts/wsl-personal
         ];
       };
     };
