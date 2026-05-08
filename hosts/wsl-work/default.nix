@@ -11,7 +11,6 @@
   modules.himmelblau = {
     localUser = "joemo";
     entraUser = "joemo@microsoft.com";
-    enableBroker = true;
   };
 
   environment.systemPackages = with pkgs; [
