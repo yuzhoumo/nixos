@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ../../roles/all
     ../../roles/desktop
     ../../services/docker
