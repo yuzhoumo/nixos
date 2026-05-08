@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
+    <nixos-wsl/modules>
     ../../roles/all
     ../../roles/desktop
     ../../services/docker
@@ -19,6 +20,9 @@
       uv
     ];
   };
+
+  wsl.enable = true;
+  wsl.defaultUser = "ppanda";
 
   networking.hostName = "wsl-personal";
   time.timeZone = "America/Los_Angeles";
