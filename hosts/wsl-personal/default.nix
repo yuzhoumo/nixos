@@ -4,21 +4,9 @@
   imports = [
     ../../roles/all
     ../../roles/desktop
+    ../../roles/developer
     ../../services/docker
   ];
-
-  users.users.ppanda = {
-    packages = with pkgs; [
-      github-copilot-cli
-      go
-      nodejs_24
-      opencode
-      python315
-      spotify
-      tor-browser
-      uv
-    ];
-  };
 
   # disable systemd-boot (conflicts with WSL bootloader)
   boot.loader.systemd-boot.enable = lib.mkForce false;

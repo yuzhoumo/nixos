@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../../roles/all
     ../../roles/desktop
+    ../../roles/developer
     ../../services/docker
     ../../services/tailscale
     ../../services/steam
@@ -12,17 +13,6 @@
 
   users.users.ppanda = {
     extraGroups = [ "video" "audio" ];
-    packages = with pkgs; [
-      discord
-      github-copilot-cli
-      go
-      nodejs_24
-      opencode
-      python315
-      spotify
-      tor-browser
-      uv
-    ];
   };
 
   # Allow ppanda to run commands as the steam user without a password
