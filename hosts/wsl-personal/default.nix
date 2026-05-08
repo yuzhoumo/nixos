@@ -13,6 +13,7 @@
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
   wsl.defaultUser = "ppanda";
+  wsl.interop.register = true;
 
   networking.hostName = "wsl-personal";
   time.timeZone = "America/Los_Angeles";
