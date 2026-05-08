@@ -8,6 +8,8 @@
     ../../services/dockerhost
     ../../services/ssh
     ../../services/tailscale
+    ../../common/boot.nix
+    ../../users/ppanda.nix
   ];
 
   hardware.cpu.intel.updateMicrocode = true; # meltdown/spectre tweaks

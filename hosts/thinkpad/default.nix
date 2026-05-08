@@ -8,6 +8,8 @@
     ../../roles/developer
     ../../services/tailscale
     ../../services/steam
+    ../../common/boot.nix
+    ../../users/ppanda.nix
   ];
 
   users.users.ppanda = {

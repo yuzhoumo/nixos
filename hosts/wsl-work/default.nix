@@ -4,13 +4,12 @@
   imports = [
     ../../roles/all
     ../../roles/developer
-    ../../users/ppanda.nix
   ];
 
-  wsl.defaultUser = "ppanda";
+  wsl.defaultUser = "joemo";
   wsl.interop.register = true;
 
-  networking.hostName = "wsl-personal";
+  networking.hostName = "wsl-work";
   time.timeZone = "America/Los_Angeles";
 
   system.stateVersion = "25.11";
