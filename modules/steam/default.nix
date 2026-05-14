@@ -1,63 +1,15 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
+  cfg = config.modules.steam;
+
   setfacl = "${pkgs.acl}/bin/setfacl";
   xhost = "${pkgs.xhost}/bin/xhost";
 
   # Wrapper that forwards display/audio sockets and runs steam as the steam user.
-  # Installed as a bin package so it's available in PATH at a stable location.
-  steam-session = pkgs.writeShellScriptBin "steam-session" ''
-    CALLER_RUNTIME="$XDG_RUNTIME_DIR"
-    STEAM_RUNTIME="/run/user/$(id -u steam)"
-
-    # If steam's runtime dir doesn't exist yet (before first reboot with
-    # linger enabled), create a fallback under steam's home (visible inside
-    # bwrap sandbox, unlike /tmp which is replaced with a fresh tmpfs)
-    if [ ! -d "$STEAM_RUNTIME" ]; then
-      STEAM_RUNTIME="/home/steam/.local/run"
-      sudo -u steam mkdir -p "$STEAM_RUNTIME"
-      sudo -u steam chmod 700 "$STEAM_RUNTIME"
-    fi
-
-    # Grant steam user traversal on the caller's runtime directory
-    ${setfacl} -m u:steam:x "$CALLER_RUNTIME"
-
-    # Wayland display socket
-    [ -e "$CALLER_RUNTIME/$WAYLAND_DISPLAY" ] && \
-      ${setfacl} -m u:steam:rw "$CALLER_RUNTIME/$WAYLAND_DISPLAY"
-
-    # PipeWire socket for audio
-    [ -e "$CALLER_RUNTIME/pipewire-0" ] && \
-      ${setfacl} -m u:steam:rw "$CALLER_RUNTIME/pipewire-0"
-
-    # PulseAudio socket (PipeWire compat layer, used by Steam)
-    [ -d "$CALLER_RUNTIME/pulse" ] && \
-      ${setfacl} -m u:steam:x "$CALLER_RUNTIME/pulse" && \
-      ${setfacl} -m u:steam:rw "$CALLER_RUNTIME/pulse/native"
-
-    # Symlink display and audio sockets into steam's runtime directory
-    sudo -u steam ln -sf "$CALLER_RUNTIME/$WAYLAND_DISPLAY" "$STEAM_RUNTIME/$WAYLAND_DISPLAY" 2>/dev/null
-    sudo -u steam ln -sf "$CALLER_RUNTIME/pipewire-0" "$STEAM_RUNTIME/pipewire-0" 2>/dev/null
-    sudo -u steam mkdir -p "$STEAM_RUNTIME/pulse" 2>/dev/null
-    sudo -u steam ln -sf "$CALLER_RUNTIME/pulse/native" "$STEAM_RUNTIME/pulse/native" 2>/dev/null
-
-    # Grant steam user access to XWayland display (Steam's UI uses X11)
-    ${xhost} +SI:localuser:steam
-
-    # Revoke X11 access when we exit (whether Steam exits normally or crashes)
-    cleanup() { ${xhost} -SI:localuser:steam 2>/dev/null; }
-    trap cleanup EXIT
-
-    # Ensure cwd is accessible to the steam user (bwrap inherits it)
-    cd /
-    # Run Steam as the steam user with its own runtime directory
-    sudo -u steam env \
-      HOME=/home/steam \
-      XDG_RUNTIME_DIR="$STEAM_RUNTIME" \
-      WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
-      DISPLAY="$DISPLAY" \
-      steam "$@"
-  '';
+  steam-session = pkgs.writeShellScriptBin "steam-session"
+    (builtins.replaceStrings [ "@setfacl@" "@xhost@" ] [ setfacl xhost ]
+      (builtins.readFile ./session.sh));
 
   # Override Steam's .desktop file to use the wrapper
   steam-desktop = pkgs.makeDesktopItem {
@@ -71,29 +23,49 @@ let
   };
 in
 {
-  # Dedicated user for Steam/games
-  users.users.steam = {
-    isNormalUser = true;
-    description = "Steam";
-    home = "/home/steam";
-    extraGroups = [ "video" "audio" "input" ];
-    packages = with pkgs; [
-      mangohud
-      protonup-qt
+  options.modules.steam = {
+    user = lib.mkOption {
+      type = lib.types.str;
+      description = "User who can launch Steam as the dedicated steam user";
+    };
+  };
+
+  config = {
+    # Dedicated user for Steam/games
+    users.users.steam = {
+      isNormalUser = true;
+      description = "Steam";
+      home = "/home/steam";
+      extraGroups = [ "video" "audio" "input" ];
+    };
+
+    # Enable lingering so systemd creates /run/user/<steam-uid> at boot
+    systemd.tmpfiles.rules = [
+      "f /var/lib/systemd/linger/steam"
     ];
+
+    programs.steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
+    programs.gamemode.enable = true;
+
+    environment.systemPackages = [ steam-session steam-desktop ];
+
+    # Grant the calling user access to audio/video devices
+    users.users.${cfg.user} = {
+      extraGroups = [ "video" "audio" ];
+    };
+
+    # Allow the calling user to run commands as steam user without password
+    security.sudo.extraRules = [{
+      users = [ cfg.user ];
+      runAs = "steam";
+      commands = [{
+        command = "ALL";
+        options = [ "NOPASSWD" "SETENV" ];
+      }];
+    }];
   };
-
-  # Enable lingering so systemd creates /run/user/<steam-uid> at boot
-  systemd.tmpfiles.rules = [
-    "f /var/lib/systemd/linger/steam"
-  ];
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-  programs.gamemode.enable = true;
-
-  environment.systemPackages = [ steam-session steam-desktop ];
 }
