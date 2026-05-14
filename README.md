@@ -17,10 +17,12 @@ nix build .#nixosConfigurations.thinkpad.config.system.build.toplevel
 
 ## Hosts
 
-| host     | type    | roles        | purpose                  |
-|----------|---------|--------------|--------------------------|
-| thinkpad | laptop  | all,desktop  | personal laptop          |
-| optiplex | server  | all,server   | lightweight homelab node |
+| host         | type    | purpose                  |
+|--------------|---------|--------------------------|
+| thinkpad     | laptop  | personal laptop          |
+| optiplex     | server  | lightweight homelab node |
+| wsl-personal | virtual | dev wsl for personal use |
+| wsl-work     | virtual | corp-joined wsl for work |
 
 ## Secrets (sops-nix)
 
