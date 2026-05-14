@@ -13,7 +13,7 @@
   };
 
   services.tailscale = {
-    authKeyFile = config.sops.secrets.tailscale-oauth-optiplex.path;
+    authKeyFile = config.sops.secrets.tailscale-oauth-key.path;
     authKeyParameters.ephemeral = false;
     authKeyParameters.preauthorized = true;
     extraUpFlags = [
