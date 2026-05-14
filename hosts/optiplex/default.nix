@@ -4,11 +4,11 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/common
-    ../../modules/server
     ../../modules/dockerhost
+    ../../modules/server
     ../../modules/ssh
     ../../modules/tailscale
-    ../../users/ppanda.nix
+    ../../modules/users/ppanda.nix
   ];
 
   networking.hostName = "optiplex";

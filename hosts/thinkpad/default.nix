@@ -7,8 +7,14 @@
     ../../modules/desktop
     ../../modules/developer
     ../../modules/tailscale
-    ../../users/ppanda.nix
+    ../../modules/users/ppanda.nix
   ];
+
+  users.users.ppanda = {
+    packages = with pkgs; [
+      discord
+    ];
+  };
 
   networking.hostName = "thinkpad";
   time.timeZone = "America/Los_Angeles";
