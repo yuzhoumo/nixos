@@ -20,6 +20,11 @@ let
           patch -p1 < ${./intune-pem-fix.patch}
         '';
       };
+      "himmelblau_policies" = attrs: {
+        postPatch = ''
+          patch -p1 < ${./intune-federation-fix.patch}
+        '';
+      };
     };
   });
 

@@ -75,6 +75,8 @@ in
         hsm_type = "tpm_bound_soft_if_possible";
 
         # WSL2 doesn't support IPv6 sockets; force IPv4 only.
+        # Note: the ipvers feature isn't compiled into all crates, so we also
+        # disable IPv6 at the kernel level below as a belt-and-suspenders fix.
         ip_version = "ipv4-only";
 
         # Home directory settings
@@ -149,6 +151,11 @@ in
       "/etc/himmelblau/fake-os-release:/etc/os-release"
       "/etc/himmelblau/fake-os-release:/usr/lib/os-release"
     ];
+
+    # The upstream module restricts himmelblaud-tasks to AF_UNIX only, but the
+    # service needs AF_INET to reach Graph/Intune endpoints for policy enforcement.
+    systemd.services.himmelblaud-tasks.serviceConfig.RestrictAddressFamilies =
+      lib.mkForce "AF_UNIX AF_INET";
 
     # Disk encryption compliance: WSL2 runs inside a VHD on the Windows host
     # which is protected by BitLocker. The himmelblaud compliance checker looks
