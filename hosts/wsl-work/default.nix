@@ -43,5 +43,10 @@
   networking.hostName = "wsl-work";
   time.timeZone = "America/Los_Angeles";
 
+  # WSL2 has broken IPv6 — outbound connections fail with EAFNOSUPPORT.
+  # Disable it so reqwest (and everything else) uses IPv4.
+  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = 1;
+  boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = 1;
+
   system.stateVersion = "25.11";
 }
