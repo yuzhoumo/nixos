@@ -74,6 +74,9 @@ in
         # binding only if available (the upstream default).
         hsm_type = "tpm_bound_soft_if_possible";
 
+        # WSL2 doesn't support IPv6 sockets; force IPv4 only.
+        ip_version = "ipv4-only";
+
         # Home directory settings
         local_groups = [ "users" ];
         home_attr = "cn";
