@@ -1,5 +1,5 @@
-# Patched himmelblau packages
-#
+{ config, lib, pkgs, himmelblau, ... }:
+
 # Applies bug-fix patches to three crates that are not yet fixed upstream:
 #
 # kanidm-hsm-crypto:
@@ -15,10 +15,9 @@
 #     The Intune details() API requires a non-empty Manufacturer field.
 #
 # himmelblau_policies:
-#   apply_intune_policy passes None for authority_host / tenant_id /
-#   graph_url when constructing the Graph client, causing "federation
-#   provider not set" errors. The patch reads them from the config.
-{ config, lib, pkgs, himmelblau, ... }:
+#   apply_intune_policy passes None for authority_host / tenant_id / graph_url
+#   when constructing the Graph client, causing "federation provider not set"
+#   errors. The patch reads them from the config.
 
 let
   system = pkgs.stdenv.hostPlatform.system;

@@ -24,7 +24,8 @@ in
   imports = [
     himmelblau.nixosModules.himmelblau
     ./packages.nix
-    ./fido.nix
+    ./compliance.nix
+    ./wsl.nix
   ];
 
   options.modules.himmelblau = {
@@ -65,7 +66,6 @@ in
       };
     };
 
-    # ── NSS ─────────────────────────────────────────────────────────────
     # User-mapping mode does NOT use nss-himmelblau. The upstream module
     # unconditionally adds "himmelblau" to nssDatabases, which causes
     # lookups for unknown names to hang (blocking sudo, aad-tool, etc.).
@@ -73,7 +73,6 @@ in
     system.nssDatabases.group = lib.mkForce [ "files" "[success=merge]" "systemd" ];
     system.nssDatabases.shadow = lib.mkForce [ "files" ];
 
-    # ── PAM ─────────────────────────────────────────────────────────────
     # Disable auth/account (would hang). Add try_unseal after pam_unix so
     # Entra secrets are automatically unlocked on local login.
     security.pam.services = let
@@ -90,7 +89,7 @@ in
       };
     in lib.genAttrs [ "sudo" "login" "systemd-user" ] overrides;
 
-    # ── User map ────────────────────────────────────────────────────────
+    # User to Entra ID mapping
     environment.etc."himmelblau/user-map" = {
       text = "${cfg.localUser}:${cfg.entraUser}\n";
       mode = "0644";
