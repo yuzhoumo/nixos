@@ -1,6 +1,6 @@
 --- a/src/provider/mod.rs	2026-05-14 22:02:47.095271815 -0700
 +++ b/src/provider/mod.rs	2026-05-14 22:05:12.652908838 -0700
-@@ -419,18 +419,73 @@
+@@ -419,18 +419,72 @@
  
          let signing_key = self.rs256_keypair(&rs256_key)?;
  
@@ -22,7 +22,7 @@
 +        // Strip empty extensionRequest from TBS DER by walking the
 +        // SEQUENCE body and replacing the [0] IMPLICIT attributes field.
 +        let clean_tbs = {
-+            use crypto_glue::der::{Reader, SliceReader, Header, Encode};
++            use crypto_glue::der::{Reader, SliceReader, Header};
 +            let mut reader = SliceReader::new(&csr_to_sign)
 +                .map_err(|_| TpmError::X509RequestSign)?;
 +            let seq_hdr = Header::decode(&mut reader)
@@ -48,7 +48,7 @@
 +            let mut new_body = body[..attr_offset].to_vec();
 +            new_body.extend_from_slice(&[0xA0, 0x00]);
 +            let mut result = Vec::new();
-+            0x30u8.encode(&mut result).map_err(|_| TpmError::X509RequestSign)?;
++            result.push(0x30); // SEQUENCE tag (raw byte, not DER-encoded integer)
 +            crypto_glue::der::Length::new(new_body.len() as u16)
 +                .encode(&mut result).map_err(|_| TpmError::X509RequestSign)?;
 +            result.extend_from_slice(&new_body);
@@ -66,8 +66,7 @@
 +            let sig_der = signature.to_der()
 +                .map_err(|_| TpmError::X509RequestAssemble)?;
 +            let inner_len = clean_tbs.len() + alg_der.len() + sig_der.len();
-+            0x30u8.encode(&mut csr_der)
-+                .map_err(|_| TpmError::X509RequestAssemble)?;
++            csr_der.push(0x30); // SEQUENCE tag (raw byte, not DER-encoded integer)
 +            crypto_glue::der::Length::new(inner_len as u16)
 +                .encode(&mut csr_der)
 +                .map_err(|_| TpmError::X509RequestAssemble)?;

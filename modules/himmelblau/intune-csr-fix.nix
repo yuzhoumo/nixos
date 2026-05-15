@@ -1,8 +1,8 @@
-# Fix: Intune CSR rejection caused by empty extensionRequest attribute
-# kanidm-hsm-crypto 0.3.6 uses x509-cert 0.2's RequestBuilder which adds
-# an empty extensionRequest to the CSR. Microsoft's API rejects this.
-# We strip the empty attribute by rebuilding the CertificationRequestInfo
-# DER without it, re-signing, and manually assembling the CertificateRequest.
+# Fix: Intune CSR rejection caused by two issues:
+# 1. kanidm-hsm-crypto 0.3.6 uses x509-cert 0.2's RequestBuilder which adds
+#    an empty extensionRequest to the CSR. We strip it in csr-fix.patch.
+# 2. libhimmelblau sends the CSR as raw base64, but Intune requires PEM-wrapped
+#    PKCS#10. We add PEM headers in intune-pem-fix.patch.
 { config, lib, pkgs, himmelblau, ... }:
 
 let
@@ -13,6 +13,11 @@ let
       "kanidm-hsm-crypto" = attrs: {
         postPatch = ''
           patch -p1 < ${./csr-fix.patch}
+        '';
+      };
+      "libhimmelblau" = attrs: {
+        postPatch = ''
+          patch -p1 < ${./intune-pem-fix.patch}
         '';
       };
     };
