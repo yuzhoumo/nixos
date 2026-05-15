@@ -32,6 +32,14 @@
   # himmelblau-broker D-Bus service and linux-entra-sso)
   users.users.joemo.linger = true;
 
+  # WSL's systemd-logind doesn't honor linger files, so the user
+  # manager (and therefore user D-Bus) won't auto-start. Force it.
+  systemd.services."user@${toString config.users.users.joemo.uid}" = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    overrideStrategy = "asDropin";
+  };
+
   networking.hostName = "wsl-work";
   time.timeZone = "America/Los_Angeles";
 
