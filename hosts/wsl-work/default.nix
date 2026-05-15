@@ -34,10 +34,18 @@
 
   # WSL's systemd-logind doesn't honor linger files, so the user
   # manager (and therefore user D-Bus) won't auto-start. Force it.
+  # Restart on failure works around a WSL2 race condition where the
+  # systemd executor hits EBUSY ("Device or resource busy") because
+  # the cgroup hierarchy isn't ready during early boot.
   systemd.services."user@${toString config.users.users.joemo.uid}" = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
     overrideStrategy = "asDropin";
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+    unitConfig.StartLimitIntervalSec = 0;
   };
 
   networking.hostName = "wsl-work";
