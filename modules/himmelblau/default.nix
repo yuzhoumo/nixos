@@ -40,6 +40,12 @@ in
       description = "Entra ID UPN (email) to map the local user to.";
       example = "joemo@microsoft.com";
     };
+
+    wsl = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether this host runs under WSL2. Enables IPv6 workarounds, USB/IP FIDO passthrough, and other WSL-specific fixups.";
+    };
   };
 
   config = {
@@ -94,5 +100,9 @@ in
       text = "${cfg.localUser}:${cfg.entraUser}\n";
       mode = "0644";
     };
+
+    # Enable lingering so systemd --user starts at boot (needed for
+    # himmelblau-broker D-Bus service and linux-entra-sso)
+    users.users.${cfg.localUser}.linger = true;
   };
 }

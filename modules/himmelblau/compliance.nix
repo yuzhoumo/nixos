@@ -3,13 +3,12 @@
 # On NixOS, several things don't match what MSIT expects for compliance:
 #
 # 1. OS identity:     Spoof /etc/os-release to fake Ubuntu.
-# 2. Disk encryption: Provide /etc/crypttab to satisfy compliance checker.
-# 3. FHS dirs:        NixOS FHS directories are default read-only. We need to
-#                     explicitly specify writeable directories explicitly.
-# 4. Sandbox gaps:    The upstream systemd unit restricts AF_UNIX only and
+# 2. FHS dirs:        NixOS FHS directories are default read-only. We need to
+#                     explicitly specify writeable directories.
+# 3. Sandbox gaps:    The upstream systemd unit restricts AF_UNIX only and
 #                     has ProtectSystem=strict, blocking network + file writes
 #                     that policy enforcement needs.
-# 5. Cron:            Enable cron service for Intune script policies.
+# 4. Cron:            Enable cron service for Intune script policies.
 
 {
   # MSIT conditional-access policy requires Ubuntu. We write a fake
@@ -37,12 +36,6 @@
     "/etc/himmelblau/fake-os-release:/etc/os-release"
     "/etc/himmelblau/fake-os-release:/usr/lib/os-release"
   ];
-
-  # The compliance checker looks for a non-empty /etc/crypttab
-  environment.etc."crypttab" = {
-    text = "# WSL2 VHD should be encrypted by host BitLocker\n";
-    mode = "0644";
-  };
 
   # Enable cron service since Intune script policies install cron jobs
   services.cron.enable = true;
