@@ -157,6 +157,29 @@ in
     systemd.services.himmelblaud-tasks.serviceConfig.RestrictAddressFamilies =
       lib.mkForce "AF_UNIX AF_INET";
 
+    # The tasks daemon needs writable access to several paths that
+    # ProtectSystem=strict blocks, and some directories don't exist on NixOS:
+    #  - /var/cache/himmelblau-policies: script cache & binaries (ScriptsCSE)
+    #  - /etc/cron.d: cron job installation for script policies (ScriptsCSE)
+    #  - /etc/krb5.conf.d: kerberos config snippets (KerberosConfig task)
+    #  - /var/lib/AccountsService: profile photos (LoadProfilePhoto task)
+    systemd.services.himmelblaud-tasks.serviceConfig.ReadWritePaths = [
+      "/var/cache/himmelblau-policies"
+      "/etc/cron.d"
+      "/etc/krb5.conf.d"
+      "/var/lib/AccountsService"
+    ];
+    systemd.tmpfiles.rules = [
+      "d /var/cache/himmelblau-policies 0750 root root -"
+      "d /etc/cron.d 0755 root root -"
+      "d /etc/krb5.conf.d 0755 root root -"
+      "d /var/lib/AccountsService/icons 0755 root root -"
+      "d /var/lib/AccountsService/users 0755 root root -"
+    ];
+
+    # Enable cron daemon so Intune script policies actually execute on schedule.
+    services.cron.enable = true;
+
     # Disk encryption compliance: WSL2 runs inside a VHD on the Windows host
     # which is protected by BitLocker. The himmelblaud compliance checker looks
     # for a non-empty /etc/crypttab to detect encryption. Provide one so the

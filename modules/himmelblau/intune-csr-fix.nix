@@ -18,6 +18,10 @@ let
       "libhimmelblau" = attrs: {
         postPatch = ''
           patch -p1 < ${./intune-pem-fix.patch}
+          # Replace bare status-only errors with status+body for diagnostics
+          sed -i 's|Err(MsalError::GeneralFailure(format!("{}", resp.status())))|{ let _st = resp.status(); let _bd = resp.text().await.unwrap_or_default(); tracing::error!("Intune API error: {} - {}", _st, _bd); Err(MsalError::GeneralFailure(format!("{}: {}", _st, _bd))) }|g' src/intune.rs
+          # WSL has no /sys/class/dmi/id/sys_vendor; provide a fallback manufacturer
+          sed -i 's|get_manufacturer().unwrap_or_default()|get_manufacturer().unwrap_or_else(\|\| "Microsoft Corporation".to_string())|' src/discovery.rs
         '';
       };
       "himmelblau_policies" = attrs: {
