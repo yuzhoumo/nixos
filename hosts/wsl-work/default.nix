@@ -1,10 +1,9 @@
-{ config, lib, pkgs, himmelblau, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
     ../../modules/common
     ../../modules/developer
-    ../../modules/himmelblau
     ../../modules/users/joemo.nix
   ];
 

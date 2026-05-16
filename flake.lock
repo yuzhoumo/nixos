@@ -19,6 +19,7 @@
     "himmelblau": {
       "inputs": {
         "nixpkgs": [
+          "nixtune",
           "nixpkgs"
         ]
       },
@@ -125,13 +126,34 @@
         "type": "github"
       }
     },
-    "root": {
+    "nixtune": {
       "inputs": {
         "himmelblau": "himmelblau",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778889737,
+        "narHash": "sha256-1NMHf8w7VVRxAQKL3/6/HWEFQg7L8/96Rbx6hReRlYI=",
+        "owner": "yuzhoumo",
+        "repo": "nixtune",
+        "rev": "2ac6aedbcec2f5f92c75e773620e989ed74e0d12",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yuzhoumo",
+        "repo": "nixtune",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
+        "nixtune": "nixtune",
         "sops-nix": "sops-nix"
       }
     },
