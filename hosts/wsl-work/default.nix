@@ -7,10 +7,10 @@
     ../../modules/users/joemo.nix
   ];
 
-  modules.himmelblau = {
-    wsl = true;
+  modules.nixtune = {
     localUser = "joemo";
     entraUser = "joemo@microsoft.com";
+    wsl = true;
   };
 
   environment.systemPackages = with pkgs; [
