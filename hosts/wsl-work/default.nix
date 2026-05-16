@@ -7,6 +7,10 @@
     ../../modules/users/joemo.nix
   ];
 
+  # Set the default WSL user and enable Windows interop
+  wsl.defaultUser = user;
+  wsl.interop.register = true;
+
   modules.nixtune = {
     localUser = "joemo";
     entraUser = "joemo@microsoft.com";

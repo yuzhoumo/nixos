@@ -134,11 +134,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778895545,
-        "narHash": "sha256-sw4n2Rup0uBKmNf/eJrtD9dLCbmsFCBml+wFtCKtffQ=",
+        "lastModified": 1778950050,
+        "narHash": "sha256-1h1isDMtJnEy8jS4cT+e+A+7AwL3LPN7CriJrMbC4Yc=",
         "owner": "yuzhoumo",
         "repo": "nixtune",
-        "rev": "d503920517dc14a125d373716815ca9b22047616",
+        "rev": "b0e174cb671eb767ef9a7b4aa77dab0bd729dc36",
         "type": "github"
       },
       "original": {
