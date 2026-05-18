@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ../../modules/all
+    ../../modules/common
     ../../modules/developer
-    ../../users/ppanda.nix
+    ../../modules/users/ppanda.nix
   ];
 
   wsl.defaultUser = "ppanda";
