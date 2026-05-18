@@ -28,6 +28,13 @@
   # Firefox for browser SSO via linux-entra-sso (auto-configured by himmelblau module)
   programs.firefox.enable = true;
 
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      vscodevim.vim
+    ];
+  };
+
   networking.hostName = "wsl-work";
   time.timeZone = "America/Los_Angeles";
 
