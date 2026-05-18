@@ -8,7 +8,7 @@
   ];
 
   # Set the default WSL user and enable Windows interop
-  wsl.defaultUser = user;
+  wsl.defaultUser = "joemo";
   wsl.interop.register = true;
 
   modules.nixtune = {
