@@ -12,10 +12,17 @@
     ../../modules/users/joemo.nix
   ];
 
-  users.users.ppanda.packages = with pkgs; [ discord ];
   modules.steam.user = "ppanda";
+  users.users.ppanda.packages = with pkgs; [
+    discord
+  ];
 
-  programs.firefox.enable = true;
+  users.users.joemo.packages = with pkgs; [
+    azure-cli
+    git-credential-manager
+    kubectl
+    powershell
+  ];
 
   modules.nixtune = {
     localUser = "joemo";

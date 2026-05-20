@@ -8,7 +8,6 @@
       bitwarden-desktop    # password manager
       bluetuith            # bluetooth management tui
       brightnessctl        # screen brightness
-      firefox              # web browser
       grim                 # screenshot util
       hyprpaper            # wallpaper manager
       kitty                # terminal emulator
@@ -24,13 +23,13 @@
       rofi                 # app launcher
       slurp                # screen coord selection util
       swayosd              # macos-style osd for volume/brightness
-      tor-browser          # web browser
       waybar               # wayland taskbar
       wdisplays            # wayland display configuration
       wl-clipboard         # wayland clipboard
     ];
   };
 
+  programs.firefox.enable  = true;
   programs.dconf.enable    = true; # gnome config store
   programs.hyprland.enable = true; # window compositor
   programs.xwayland.enable = true; # xserver compatibility layer
