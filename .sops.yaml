@@ -3,6 +3,10 @@ host_keys:
   - &thinkpad age1jm7l0a2pd3df3xupynajs87lkg96zaxn05jgv4fl04z5pxkm9pksdhz35y
 
 creation_rules:
+  - path_regex: secrets/azvpn-profile\.xml$
+    key_groups:
+      - age:
+        - *thinkpad
   - path_regex: secrets/.*.yaml$
     key_groups:
       - age:

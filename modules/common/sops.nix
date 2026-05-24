@@ -2,6 +2,7 @@
 
 {
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.age.keyFile = "/etc/sops/age/keys.txt";
 
   environment.variables.SOPS_AGE_KEY_FILE = "/etc/sops/age/keys.txt";
 

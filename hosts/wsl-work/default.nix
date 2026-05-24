@@ -2,10 +2,13 @@
 
 {
   imports = [
+    ../../modules/azurevpn
     ../../modules/common
     ../../modules/developer
     ../../modules/users/joemo.nix
   ];
+
+  programs.azurevpn.enable = true;
 
   # Set the default WSL user and enable Windows interop
   wsl.defaultUser = "joemo";

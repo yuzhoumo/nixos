@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -6,8 +6,21 @@
     ../../modules/common
     ../../modules/desktop
     ../../modules/developer
+    ../../modules/azurevpn
     ../../modules/users/joemo.nix
   ];
+
+  sops.secrets.azure-vpn-profile = {
+    sopsFile = ../../secrets/azvpn-profile.xml;
+    format = "binary";
+  };
+
+  programs.azurevpn = {
+    enable = true;
+    profileFile = config.sops.secrets.azure-vpn-profile.path;
+    profileName = "MSFT-AzVPN-TEST.xml";
+    profileUsers = [ "joemo" ];
+  };
 
   users.users.joemo.packages = with pkgs; [
     azure-cli
