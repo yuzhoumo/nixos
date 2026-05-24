@@ -5,7 +5,6 @@
   dpkg,
   autoPatchelfHook,
   makeWrapper,
-  runCommandCC,
   atk,
   cairo,
   curl,
@@ -29,15 +28,6 @@
 let
   pname = "microsoft-azurevpnclient";
   version = "3.0.0";
-
-  # LD_PRELOAD library that drops capabilities in non-VPN subprocesses.
-  # Fixes AAD browser auth by allowing xdg-desktop-portal to identify callers.
-  relax = runCommandCC "azurevpnclient-relax" { } ''
-    mkdir -p $out/lib
-    cc -O2 -Wall -shared -fPIC -nostartfiles \
-      -o $out/lib/libazurevpnclient-relax.so \
-      ${./relax.c}
-  '';
 
   runtimeLibs = [
     atk
@@ -91,7 +81,6 @@ let
       makeWrapper $out/opt/microsoft/${pname}/${pname} \
         $out/bin/azurevpnclient-unprivileged \
         --set GTK_USE_PORTAL 1 \
-        --set LD_PRELOAD "${relax}/lib/libazurevpnclient-relax.so" \
         --prefix PATH : "${lib.makeBinPath [ zenity xdg-utils ]}" \
         --prefix LD_LIBRARY_PATH : "$out/opt/microsoft/${pname}/lib"
 
