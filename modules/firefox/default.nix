@@ -169,6 +169,10 @@
       "dom.security.https_only_mode" = true;
       "dom.security.https_only_mode_ever_enabled" = true;
 
+      # Don't upgrade local addresses (localhost/127.0.0.1) to HTTPS.
+      # Required for OAuth localhost callbacks (e.g. git-credential-manager).
+      "dom.security.https_only_mode.upgrade_local" = false;
+
       # Disable Network Connectivity checks
       "network.connectivity-service.enabled" = false;
 
