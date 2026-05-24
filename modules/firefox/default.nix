@@ -22,9 +22,6 @@
       # Change homepage
       "browser.startup.homepage" = "https://start.duckduckgo.com/";
 
-      # Move sidebar to the right
-      "sidebar.position_start" = false;
-
       # Show and enable compact mode (FF89)
       "browser.compactmode.show" = true;
       "browser.uidensity" = 1;
@@ -74,8 +71,8 @@
 
       # Disable using the OS's geolocation service
       "geo.provider.ms-windows-location" = false; # Windows
-      "geo.provider.use_corelocation" = false;     # macOS
-      "geo.provider.use_gpsd" = false;             # Linux
+      "geo.provider.use_corelocation" = false;    # macOS
+      "geo.provider.use_gpsd" = false;            # Linux
 
       # Disable region updates
       "browser.region.network.url" = "";
@@ -165,14 +162,6 @@
       /* NETWORK & DNS */
       /*****************/
 
-      # Enable HTTPS everywhere
-      "dom.security.https_only_mode" = true;
-      "dom.security.https_only_mode_ever_enabled" = true;
-
-      # Don't upgrade local addresses (localhost/127.0.0.1) to HTTPS.
-      # Required for OAuth localhost callbacks (e.g. git-credential-manager).
-      "dom.security.https_only_mode.upgrade_local" = false;
-
       # Disable Network Connectivity checks
       "network.connectivity-service.enabled" = false;
 
@@ -191,9 +180,6 @@
 
       # Disable mousedown speculative connections on bookmarks and history
       "browser.places.speculativeConnect.enabled" = false;
-
-      # Disable IPv6
-      "network.dns.disableIPv6" = true;
 
       # Disable DNS over HTTPS (5 = no DOH)
       "network.trr.mode" = 5;
@@ -249,9 +235,6 @@
 
       # Disable JS in PDFs
       "pdfjs.enableScripting" = false;
-
-      # Show warning for insecure SSL ciphers
-      "security.ssl.treat_unsafe_negotiation_as_broken" = true;
     };
 
     policies = {
