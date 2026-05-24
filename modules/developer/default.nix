@@ -7,7 +7,6 @@
     nodejs_24
     opencode
     python315
-    spotify
     uv
   ];
 
