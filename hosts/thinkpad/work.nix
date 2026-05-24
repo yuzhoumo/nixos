@@ -6,6 +6,7 @@
     ../../modules/common
     ../../modules/desktop
     ../../modules/developer
+    ../../modules/users/joemo.nix
   ];
 
   users.users.joemo.packages = with pkgs; [
