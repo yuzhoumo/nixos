@@ -87,10 +87,12 @@ in
       in lib.concatMapStringsSep "\n" (user: let
         home = config.users.users.${user}.home;
         dataDir = "${home}/.local/share/microsoft-azurevpnclient";
+        configDir = "${home}/.config/microsoft-azurevpnclient";
         profileDir = "${dataDir}/profiles";
+        configProfileDir = "${configDir}/profiles";
         prefsFile = "${dataDir}/shared_preferences.json";
       in ''
-        mkdir -p "${profileDir}"
+        mkdir -p "${profileDir}" "${configProfileDir}"
         cp -f "${cfg.profileFile}" "${profileDir}/${cfg.profileName}"
 
         # Parse profile XML and register in shared_preferences.json
@@ -118,7 +120,10 @@ in
             '{"flutter.profiles": [$entry]}' > "${prefsFile}"
         fi
 
-        chown -R ${user}:$(id -gn ${user}) "${dataDir}"
+        # Deploy profile data to config dir (client reads from ~/.config path)
+        cp -f "$_xml" "${configProfileDir}/$_name"
+
+        chown -R ${user}:$(id -gn ${user}) "${dataDir}" "${configDir}"
       '') cfg.profileUsers;
     };
   };
