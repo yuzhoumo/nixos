@@ -6,8 +6,16 @@
     ../../modules/common
     ../../modules/desktop
     ../../modules/developer
-    ../../modules/azurevpn
     ../../modules/users/joemo.nix
+  ];
+
+  users.users.joemo.packages = with pkgs; [
+    azure-cli
+    git-credential-manager
+    kubectl
+    powershell
+    spotify
+    teams-for-linux
   ];
 
   sops.secrets.azure-vpn-profile = {
@@ -21,15 +29,6 @@
     profileName = "MSFT-AzVPN-TEST.xml";
     profileUsers = [ "joemo" ];
   };
-
-  users.users.joemo.packages = with pkgs; [
-    azure-cli
-    git-credential-manager
-    kubectl
-    powershell
-    spotify
-    teams-for-linux
-  ];
 
   modules.nixtune = {
     localUser = "joemo";

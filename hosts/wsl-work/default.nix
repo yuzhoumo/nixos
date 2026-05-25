@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../modules/azurevpn
     ../../modules/common
     ../../modules/developer
     ../../modules/users/joemo.nix
