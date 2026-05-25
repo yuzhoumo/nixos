@@ -29,14 +29,6 @@
     powershell
     spotify
     teams-for-linux
-    (pkgs.makeDesktopItem {
-      name = "teams-for-linux";
-      desktopName = "Microsoft Teams";
-      comment = "Unofficial Microsoft Teams client for Linux";
-      icon = "teams-for-linux";
-      exec = "teams-for-linux --auth.intune.enabled %U";
-      categories = [ "Chat" "InstantMessaging" "Network" ];
-    })
   ];
 
   modules.nixtune = {

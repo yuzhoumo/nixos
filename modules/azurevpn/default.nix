@@ -16,7 +16,6 @@ in
         When set, the profile is copied into each profile user's
         ~/.local/share/microsoft-azurevpnclient/profiles/ directory
         so the client picks it up on launch.
-        Intended for use with sops-nix decrypted secret paths.
       '';
     };
 
