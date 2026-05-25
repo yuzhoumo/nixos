@@ -82,47 +82,91 @@ in
       text = let
         xmllint = "${pkgs.libxml2}/bin/xmllint";
         jq = "${pkgs.jq}/bin/jq";
-        xpath = field: "--xpath \"//*[local-name()='${field}']/text()\"";
+        deployProfile = pkgs.writeShellScript "azurevpn-deploy-profile" ''
+          PROFILE_SRC="$1"
+          PROFILE_NAME="$2"
+          DATA_DIR="$3"
+          CONFIG_DIR="$4"
+          OWNER="$5"
+
+          PROFILE_DIR="$DATA_DIR/profiles"
+          CONFIG_PROFILE_DIR="$CONFIG_DIR/profiles"
+          PREFS="$DATA_DIR/shared_preferences.json"
+          XML="$PROFILE_DIR/$PROFILE_NAME"
+
+          # Query XML text node by slash-delimited local-name path
+          xpath() {
+            local expr="" first=true part
+            for part in $(echo "$1" | tr '/' ' '); do
+              if $first; then expr="//*[local-name()='$part']"; first=false
+              else expr="$expr/*[local-name()='$part']"; fi
+            done
+            ${xmllint} --xpath "$expr/text()" "$XML" 2>/dev/null || true
+          }
+
+          mkdir -p "$PROFILE_DIR" "$CONFIG_PROFILE_DIR"
+          cp -f "$PROFILE_SRC" "$XML"
+
+          # Extract connection metadata from profile XML
+          name=$(xpath "AzVpnProfile/name")
+          auth=$(xpath "clientauth/type")
+          tenant=$(xpath "aad/tenant")
+          audience=$(xpath "aad/audience")
+          issuer=$(xpath "aad/issuer")
+          secret=$(xpath "serversecret")
+          hash=$(xpath "Cert/hash")
+          fqdn=$(${xmllint} --xpath \
+            "//*[local-name()='serverlist']/*[local-name()='ServerEntry'][1]/*[local-name()='fqdn']/text()" \
+            "$XML" 2>/dev/null || true)
+
+          count=$(${xmllint} --xpath \
+            "count(//*[local-name()='ServerEntry'])" \
+            "$XML" 2>/dev/null || echo "1")
+          if [ "$count" -gt 1 ] 2>/dev/null; then ha="true"; else ha="false"; fi
+
+          # Build Flutter shared_preferences entry for this VPN profile
+          entry="{server_name: $name, fqdn: $fqdn,"
+          entry+=" profile_file_path: $XML,"
+          entry+=" profile_file_name: $PROFILE_NAME,"
+          entry+=" server_secret: $secret,"
+          entry+=" auth_type: $auth,"
+          entry+=" tenant: $tenant,"
+          entry+=" audience: $audience,"
+          entry+=" issuer: $issuer,"
+          entry+=" cert_hash: $hash,"
+          entry+=" cert_public_data_file_path: ,"
+          entry+=" cert_public_data_file_name: ,"
+          entry+=" cert_private_key_file_path: ,"
+          entry+=" cert_private_key_file_name: ,"
+          entry+=" is_highly_available: $ha,"
+          entry+=" last_logged_user: , msal_cache: ,"
+          entry+=" cert_passphrase: , profile_data: ,"
+          entry+=" status: }"
+
+          if [ -f "$PREFS" ]; then
+            ${jq} --arg entry "$entry" --arg pfn "$PROFILE_NAME" \
+              '."flutter.profiles" = ([
+                ."flutter.profiles"[]?
+                | select(contains($pfn) | not)
+              ] + [$entry])' \
+              "$PREFS" > "$PREFS.tmp" && mv "$PREFS.tmp" "$PREFS"
+          else
+            ${jq} -n --arg entry "$entry" \
+              '{"flutter.profiles": [$entry]}' > "$PREFS"
+          fi
+
+          cp -f "$XML" "$CONFIG_PROFILE_DIR/$name"
+          chown -R "$OWNER:$(id -gn "$OWNER")" "$DATA_DIR" "$CONFIG_DIR"
+        '';
       in lib.concatMapStringsSep "\n" (user: let
         home = config.users.users.${user}.home;
-        dataDir = "${home}/.local/share/microsoft-azurevpnclient";
-        configDir = "${home}/.config/microsoft-azurevpnclient";
-        profileDir = "${dataDir}/profiles";
-        configProfileDir = "${configDir}/profiles";
-        prefsFile = "${dataDir}/shared_preferences.json";
       in ''
-        mkdir -p "${profileDir}" "${configProfileDir}"
-        cp -f "${cfg.profileFile}" "${profileDir}/${cfg.profileName}"
-
-        # Parse profile XML and register in shared_preferences.json
-        _xml="${profileDir}/${cfg.profileName}"
-        _name=$(${xmllint} ${xpath "AzVpnProfile']/*[local-name()='name"} "$_xml" 2>/dev/null || echo "")
-        _fqdn=$(${xmllint} ${xpath "serverlist']/*[local-name()='ServerEntry'][1]/*[local-name()='fqdn"} "$_xml" 2>/dev/null || echo "")
-        _auth=$(${xmllint} ${xpath "clientauth']/*[local-name()='type"} "$_xml" 2>/dev/null || echo "")
-        _tenant=$(${xmllint} ${xpath "aad']/*[local-name()='tenant"} "$_xml" 2>/dev/null || echo "")
-        _audience=$(${xmllint} ${xpath "aad']/*[local-name()='audience"} "$_xml" 2>/dev/null || echo "")
-        _issuer=$(${xmllint} ${xpath "aad']/*[local-name()='issuer"} "$_xml" 2>/dev/null || echo "")
-        _secret=$(${xmllint} ${xpath "serversecret"} "$_xml" 2>/dev/null || echo "")
-        _hash=$(${xmllint} ${xpath "Cert']/*[local-name()='hash"} "$_xml" 2>/dev/null || echo "")
-        _servers=$(${xmllint} --xpath "count(//*[local-name()='ServerEntry'])" "$_xml" 2>/dev/null || echo "1")
-        if [ "$_servers" -gt 1 ] 2>/dev/null; then _ha="true"; else _ha="false"; fi
-
-        _entry="{server_name: $_name, fqdn: $_fqdn, profile_file_path: ${profileDir}/${cfg.profileName}, profile_file_name: ${cfg.profileName}, server_secret: $_secret, auth_type: $_auth, tenant: $_tenant, audience: $_audience, issuer: $_issuer, cert_hash: $_hash, cert_public_data_file_path: , cert_public_data_file_name: , cert_private_key_file_path: , cert_private_key_file_name: , is_highly_available: $_ha, last_logged_user: , msal_cache: , cert_passphrase: , profile_data: , status: }"
-
-        if [ -f "${prefsFile}" ]; then
-          # Remove any existing entry for this profile file, then add the new one
-          ${jq} --arg entry "$_entry" --arg pfn "${cfg.profileName}" \
-            '."flutter.profiles" = ([."flutter.profiles"[]? | select(contains($pfn) | not)] + [$entry])' \
-            "${prefsFile}" > "${prefsFile}.tmp" && mv "${prefsFile}.tmp" "${prefsFile}"
-        else
-          ${jq} -n --arg entry "$_entry" \
-            '{"flutter.profiles": [$entry]}' > "${prefsFile}"
-        fi
-
-        # Deploy profile data to config dir (client reads from ~/.config path)
-        cp -f "$_xml" "${configProfileDir}/$_name"
-
-        chown -R ${user}:$(id -gn ${user}) "${dataDir}" "${configDir}"
+        ${deployProfile} \
+          "${cfg.profileFile}" \
+          "${cfg.profileName}" \
+          "${home}/.local/share/microsoft-azurevpnclient" \
+          "${home}/.config/microsoft-azurevpnclient" \
+          "${user}"
       '') cfg.profileUsers;
     };
   };
