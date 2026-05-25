@@ -77,16 +77,48 @@ in
           ${pkgs.cacert.unbundled}/etc/ssl/certs/DigiCert_Global_Root_G2:33af1e6a711a9a0bb2864b11d09fae5.crt > "$out"
       '';
 
-    # Deploy VPN profile into each user's app data directory
+    # Deploy VPN profile and register it in the Flutter client's preferences
     system.activationScripts.azurevpn-profile = lib.mkIf (cfg.profileFile != null) {
       deps = [ "setupSecrets" ];
-      text = lib.concatMapStringsSep "\n" (user: let
+      text = let
+        xmllint = "${pkgs.libxml2}/bin/xmllint";
+        jq = "${pkgs.jq}/bin/jq";
+        xpath = field: "--xpath \"//*[local-name()='${field}']/text()\"";
+      in lib.concatMapStringsSep "\n" (user: let
         home = config.users.users.${user}.home;
-        dir = "${home}/.local/share/microsoft-azurevpnclient/profiles";
+        dataDir = "${home}/.local/share/microsoft-azurevpnclient";
+        profileDir = "${dataDir}/profiles";
+        prefsFile = "${dataDir}/shared_preferences.json";
       in ''
-        mkdir -p "${dir}"
-        cp -f "${cfg.profileFile}" "${dir}/${cfg.profileName}"
-        chown -R ${user}:$(id -gn ${user}) "${home}/.local/share/microsoft-azurevpnclient"
+        mkdir -p "${profileDir}"
+        cp -f "${cfg.profileFile}" "${profileDir}/${cfg.profileName}"
+
+        # Parse profile XML and register in shared_preferences.json
+        _xml="${profileDir}/${cfg.profileName}"
+        _name=$(${xmllint} ${xpath "AzVpnProfile']/*[local-name()='name"} "$_xml" 2>/dev/null || echo "")
+        _fqdn=$(${xmllint} ${xpath "serverlist']/*[local-name()='ServerEntry'][1]/*[local-name()='fqdn"} "$_xml" 2>/dev/null || echo "")
+        _auth=$(${xmllint} ${xpath "clientauth']/*[local-name()='type"} "$_xml" 2>/dev/null || echo "")
+        _tenant=$(${xmllint} ${xpath "aad']/*[local-name()='tenant"} "$_xml" 2>/dev/null || echo "")
+        _audience=$(${xmllint} ${xpath "aad']/*[local-name()='audience"} "$_xml" 2>/dev/null || echo "")
+        _issuer=$(${xmllint} ${xpath "aad']/*[local-name()='issuer"} "$_xml" 2>/dev/null || echo "")
+        _secret=$(${xmllint} ${xpath "serversecret"} "$_xml" 2>/dev/null || echo "")
+        _hash=$(${xmllint} ${xpath "Cert']/*[local-name()='hash"} "$_xml" 2>/dev/null || echo "")
+        _servers=$(${xmllint} --xpath "count(//*[local-name()='ServerEntry'])" "$_xml" 2>/dev/null || echo "1")
+        if [ "$_servers" -gt 1 ] 2>/dev/null; then _ha="true"; else _ha="false"; fi
+
+        _entry="{server_name: $_name, fqdn: $_fqdn, profile_file_path: ${profileDir}/${cfg.profileName}, profile_file_name: ${cfg.profileName}, server_secret: $_secret, auth_type: $_auth, tenant: $_tenant, audience: $_audience, issuer: $_issuer, cert_hash: $_hash, cert_public_data_file_path: , cert_public_data_file_name: , cert_private_key_file_path: , cert_private_key_file_name: , is_highly_available: $_ha, last_logged_user: , msal_cache: , cert_passphrase: , profile_data: , status: }"
+
+        if [ -f "${prefsFile}" ]; then
+          # Remove any existing entry for this profile file, then add the new one
+          ${jq} --arg entry "$_entry" --arg pfn "${cfg.profileName}" \
+            '."flutter.profiles" = ([."flutter.profiles"[]? | select(contains($pfn) | not)] + [$entry])' \
+            "${prefsFile}" > "${prefsFile}.tmp" && mv "${prefsFile}.tmp" "${prefsFile}"
+        else
+          ${jq} -n --arg entry "$_entry" \
+            '{"flutter.profiles": [$entry]}' > "${prefsFile}"
+        fi
+
+        chown -R ${user}:$(id -gn ${user}) "${dataDir}"
       '') cfg.profileUsers;
     };
   };
