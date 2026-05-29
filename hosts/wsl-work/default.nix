@@ -42,6 +42,7 @@
     profileName = "MSFT-AzVPN-TEST.xml";
     profileUsers = [ "joemo" ];
     softwareRendering = true;
+    browser = "firefox"; # Open sign-in in Firefox inside WSL rather than Windows
   };
 
   modules.nixtune = {
