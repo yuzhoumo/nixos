@@ -29,6 +29,13 @@
     profileUsers = [ "joemo" ];
   };
 
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      vscodevim.vim
+    ];
+  };
+
   modules.nixtune = {
     enable = true;
     localUser = "joemo";
