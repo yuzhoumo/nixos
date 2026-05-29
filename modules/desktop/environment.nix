@@ -31,11 +31,19 @@
 
   programs.firefox.enable  = true;
   programs.dconf.enable    = true; # gnome config store
-  programs.hyprland.enable = true; # window compositor
   programs.xwayland.enable = true; # xserver compatibility layer
 
+  # window compositor (uwsm provides proper systemd session management)
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
+
   services = {
-    displayManager.gdm.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
 
     pipewire = {
       enable = true;
