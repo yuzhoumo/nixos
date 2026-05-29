@@ -1,12 +1,14 @@
 host_keys:
   - &optiplex age1cep9tzdt920mp9j5ajruuna2hmmtvwzvmda6l8gqhny49res9syqc9nmru
   - &thinkpad age1jm7l0a2pd3df3xupynajs87lkg96zaxn05jgv4fl04z5pxkm9pksdhz35y
+  - &wsl-work age1ydmvlc0aaut8sns42t854lyccd63fgsx47zu9ufh2rzaw2re3fussgteg7
 
 creation_rules:
   - path_regex: secrets/azvpn-profile\.xml$
     key_groups:
       - age:
         - *thinkpad
+        - *wsl-work
   - path_regex: secrets/.*.yaml$
     key_groups:
       - age:
