@@ -14,6 +14,7 @@
   wsl.interop.register = true;
 
   modules.nixtune = {
+    enable = true;
     localUser = "joemo";
     entraUser = "joemo@microsoft.com";
     wsl = true;
