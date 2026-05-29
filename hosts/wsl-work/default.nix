@@ -41,6 +41,7 @@
     profileFile = config.sops.secrets.azure-vpn-profile.path;
     profileName = "MSFT-AzVPN-TEST.xml";
     profileUsers = [ "joemo" ];
+    softwareRendering = true;
   };
 
   modules.nixtune = {
@@ -58,9 +59,7 @@
     usbutils # lsusb
   ];
 
-  # Force d3d12 gallium driver instead of zink to avoid Mesa/EGL GPU crashes on WSL
-  # Force XWayland to work around broken context menus under native Wayland on WSL
-  environment.variables.GALLIUM_DRIVER = "d3d12";
+  # Force Firefox XWayland to fix broken context menus under native Wayland on WSL
   environment.variables.MOZ_ENABLE_WAYLAND = "0";
   environment.variables.MOZ_GTK_TITLEBAR_DECORATION = "client";
 
