@@ -14,6 +14,12 @@
   wsl.defaultUser = "joemo";
   wsl.interop.register = true;
 
+  # Pin a UID distinct from other concurrently-running WSL distros. WSL2
+  # shares one kernel and cgroup tree across distros, so a duplicate UID
+  # collides on user-<uid>.slice and user@<uid>.service fails with
+  # "Failed to spawn executor: Device or resource busy".
+  users.users.joemo.uid = 1001;
+
   modules.nixtune = {
     enable = true;
     localUser = "joemo";
