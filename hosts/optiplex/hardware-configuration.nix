@@ -35,6 +35,6 @@
     powertop.enable = true; # auto-tune USB/PCIe/SATA power management
   };
 
-  service.thermald.enable = true; # intel thermal management daemon
+  services.thermald.enable = true; # intel thermal management daemon
   services.fstrim.enable = true; # enable ssd trim
 }

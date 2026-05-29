@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../services/tailscale
+    ../tailscale
   ];
 
   networking.firewall = {
