@@ -29,7 +29,12 @@
   ];
 
   # Firefox for browser SSO via linux-entra-sso (auto-configured by himmelblau module)
+  # Force d3d12 gallium driver instead of zink to avoid Mesa/EGL GPU crashes on WSL
+  # Force XWayland to work around broken context menus under native Wayland on WSL
   programs.firefox.enable = true;
+  environment.variables.GALLIUM_DRIVER = "d3d12";
+  environment.variables.MOZ_ENABLE_WAYLAND = "0";
+  environment.variables.MOZ_GTK_TITLEBAR_DECORATION = "client";
 
   programs.vscode = {
     enable = true;
