@@ -35,10 +35,7 @@
   programs.xwayland.enable = true; # xserver compatibility layer
 
   services = {
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
+    displayManager.gdm.enable = true;
 
     pipewire = {
       enable = true;
