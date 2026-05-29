@@ -22,7 +22,7 @@
     format = "binary";
   };
 
-  programs.azurevpn = {
+  programs.azurevpnclient = {
     enable = true;
     profileFile = config.sops.secrets.azure-vpn-profile.path;
     profileName = "MSFT-AzVPN-TEST.xml";

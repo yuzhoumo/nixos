@@ -14,7 +14,7 @@
     interop.register = true;
 
     # Azure VPN runs inside this WSL distro, so systemd-resolved (enabled by
-    # the azurevpn module) must own DNS for the tunnel's split-DNS to work.
+    # the azurevpnclient module) must own DNS for the tunnel's split-DNS to work.
     # Stop WSL from regenerating /etc/resolv.conf, which otherwise points at
     # the WSL DNS proxy and shadows resolved.
     wslConf.network.generateResolvConf = false;
@@ -36,7 +36,7 @@
     format = "binary";
   };
 
-  programs.azurevpn = {
+  programs.azurevpnclient = {
     enable = true;
     profileFile = config.sops.secrets.azure-vpn-profile.path;
     profileName = "MSFT-AzVPN-TEST.xml";

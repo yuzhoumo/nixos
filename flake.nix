@@ -20,13 +20,13 @@
       url = "github:yuzhoumo/nixtune";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-azurevpn = {
-      url = "github:yuzhoumo/nix-azurevpn";
+    nix-azurevpnclient = {
+      url = "github:yuzhoumo/nix-azurevpnclient";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nix-index-database, sops-nix, nixos-wsl, nixtune, nix-azurevpn, ... }: {
+  outputs = { self, nixpkgs, nixos-hardware, nix-index-database, sops-nix, nixos-wsl, nixtune, nix-azurevpnclient, ... }: {
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {
         modules = [
@@ -34,7 +34,7 @@
           nix-index-database.nixosModules.nix-index
           sops-nix.nixosModules.sops
           nixtune.nixosModules.default
-          nix-azurevpn.nixosModules.default
+          nix-azurevpnclient.nixosModules.default
           ./hosts/thinkpad
         ];
       };
@@ -67,7 +67,7 @@
           nix-index-database.nixosModules.nix-index
           sops-nix.nixosModules.sops
           nixtune.nixosModules.default
-          nix-azurevpn.nixosModules.default
+          nix-azurevpnclient.nixosModules.default
           ./hosts/wsl-work
         ];
       };

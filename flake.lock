@@ -38,23 +38,23 @@
         "type": "github"
       }
     },
-    "nix-azurevpn": {
+    "nix-azurevpnclient": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1780093702,
-        "narHash": "sha256-YQEwGuBH2o0rS7CVRYWLjszqAmYYWjp1azyRPrKunFM=",
+        "lastModified": 1780095393,
+        "narHash": "sha256-OFWIf4EqQNrfdNrrzBLboITFFSy8ynldhWIlraaE3Bc=",
         "owner": "yuzhoumo",
-        "repo": "nix-azurevpn",
-        "rev": "4989e461cf0a89b40301dd3e9fd81d536f2f0805",
+        "repo": "nix-azurevpnclient",
+        "rev": "3e590f362b512efd0397e2b8a8d977cab7bd7d84",
         "type": "github"
       },
       "original": {
         "owner": "yuzhoumo",
-        "repo": "nix-azurevpn",
+        "repo": "nix-azurevpnclient",
         "type": "github"
       }
     },
@@ -171,7 +171,7 @@
     },
     "root": {
       "inputs": {
-        "nix-azurevpn": "nix-azurevpn",
+        "nix-azurevpnclient": "nix-azurevpnclient",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
