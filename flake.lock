@@ -24,11 +24,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779397331,
-        "narHash": "sha256-pF/Rcsbrj7purz7gxqZ6qcO3kpuB9cOPi8g1rkCJ9ik=",
+        "lastModified": 1780004137,
+        "narHash": "sha256-X8ho4yMMlfrSMLrXOCH86wwpF/pHArdhnnG75EPbCCA=",
         "owner": "himmelblau-idm",
         "repo": "himmelblau",
-        "rev": "1f848d27f3567008ef23ff5656568e4204b86ca1",
+        "rev": "ffab05f88399e5045313d97369f94238b747d7b7",
         "type": "github"
       },
       "original": {
@@ -156,11 +156,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779739515,
-        "narHash": "sha256-6jj8uUQUsLahi383VwTeNOi+GkdpUIcwYv8k/goC5cA=",
+        "lastModified": 1780077699,
+        "narHash": "sha256-XHrkrn42RzktvBOscOq6VD4rgWogoR7bmDXmBopPO/Y=",
         "owner": "yuzhoumo",
         "repo": "nixtune",
-        "rev": "27a396a64db9465d46f346b359a1478ddb956585",
+        "rev": "17b9d8e687c107379fa16adaa9f627b717762b08",
         "type": "github"
       },
       "original": {
