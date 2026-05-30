@@ -59,6 +59,17 @@
     entraUser = "joemo@microsoft.com";
   };
 
+  # Verify Entra ID auth via himmelblau once per running WSL session. /run is a
+  # tmpfs that is recreated every time this distro boots, so the marker below
+  # only survives for the lifetime of the running session: the first interactive
+  # shell after boot runs `aad-tool auth-test`, and every later shell skips it.
+  programs.zsh.interactiveShellInit = ''
+    aad_marker="/run/.ran-aad-auth-test-$USER"
+    if [[ ! -e "$aad_marker" ]]; then
+      sudo aad-tool auth-test --name "$USER" && sudo touch "$aad_marker"
+    fi
+  '';
+
   environment.systemPackages = with pkgs; [
     azure-cli
     git-credential-manager
