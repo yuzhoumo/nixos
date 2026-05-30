@@ -8,6 +8,7 @@
     ../../modules/steam
     ../../modules/tailscale
     ../../modules/firefox
+    ../../modules/teams
     ./hardware-configuration.nix
     ./personal.nix
     ./work.nix

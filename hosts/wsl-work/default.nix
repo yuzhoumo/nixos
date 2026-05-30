@@ -6,6 +6,7 @@
     ../../modules/developer
     ../../modules/users/joemo.nix
     ../../modules/firefox
+    ../../modules/teams
   ];
 
   # Set the default WSL user and enable Windows interop
@@ -50,6 +51,11 @@
     localUser = "joemo";
     entraUser = "joemo@microsoft.com";
     wsl = true;
+  };
+
+  modules.teams = {
+    user = "joemo";
+    entraUser = "joemo@microsoft.com";
   };
 
   environment.systemPackages = with pkgs; [
