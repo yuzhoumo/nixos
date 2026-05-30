@@ -64,13 +64,6 @@
   environment.variables.MOZ_ENABLE_WAYLAND = "0";
   environment.variables.MOZ_GTK_TITLEBAR_DECORATION = "client";
 
-  programs.vscode = {
-    enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      vscodevim.vim
-    ];
-  };
-
   networking.hostName = "wsl-work";
   time.timeZone = "America/Los_Angeles";
 
