@@ -13,6 +13,7 @@
   wsl = {
     defaultUser = "joemo";
     interop.register = true;
+    startMenuLaunchers = true;
 
     # Azure VPN runs inside this WSL distro, so systemd-resolved (enabled by
     # the azurevpnclient module) must own DNS for the tunnel's split-DNS to work.
