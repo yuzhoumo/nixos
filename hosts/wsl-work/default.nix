@@ -57,6 +57,7 @@
     git-credential-manager
     kubectl
     powershell
+    teams-for-linux
     usbutils # lsusb
   ];
 
