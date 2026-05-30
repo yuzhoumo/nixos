@@ -5,6 +5,9 @@
     ../../modules/common
     ../../modules/desktop
     ../../modules/developer
+    ../../modules/steam
+    ../../modules/tailscale
+    ../../modules/firefox
     ./hardware-configuration.nix
     ./personal.nix
     ./work.nix

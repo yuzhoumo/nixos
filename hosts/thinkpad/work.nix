@@ -2,9 +2,6 @@
 
 {
   imports = [
-    ../../modules/common
-    ../../modules/desktop
-    ../../modules/developer
     ../../modules/users/joemo.nix
   ];
 

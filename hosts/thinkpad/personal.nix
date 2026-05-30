@@ -2,9 +2,6 @@
 
 {
   imports = [
-    ../../modules/steam
-    ../../modules/tailscale
-    ../../modules/firefox
     ../../modules/users/ppanda.nix
   ];
 
