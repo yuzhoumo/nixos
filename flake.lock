@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780098700,
-        "narHash": "sha256-OQKY1wq4X53W6LqWCmQjLzN4Gf7/yem1dJ+NWTYbaJo=",
+        "lastModified": 1780284173,
+        "narHash": "sha256-3ZX78e3MrItPkBuCtkL8JNQi9YdHhv5OwhF/ehwZQjo=",
         "owner": "yuzhoumo",
         "repo": "nix-azurevpnclient",
-        "rev": "30f08e4008ce80ab19b8649a34c3cbf66b07d2ad",
+        "rev": "3b20b127fad8d112f7d8f83a464dec66c3af0a49",
         "type": "github"
       },
       "original": {
@@ -65,11 +65,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779604987,
-        "narHash": "sha256-ZQ5z+fVhxYKtIFwtqGp5O0PD84BM1riASvqDaN5Xs+s=",
+        "lastModified": 1780210899,
+        "narHash": "sha256-4axz3OBPTKa6LIkXV8n0lc63MQU+et2CB5DGobEAi6k=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "8fba98c80b48fa013820e0163c5096922fea4ddd",
+        "rev": "97df9dc0b7c924344b793a15c1e8e4522ebb854e",
         "type": "github"
       },
       "original": {
